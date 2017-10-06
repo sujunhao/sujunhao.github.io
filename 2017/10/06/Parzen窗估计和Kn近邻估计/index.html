@@ -1,91 +1,12 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<!DOCTYPE html>
+<html lang=zh>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="模式识别," />
-
-
-
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="非参数概率密度估计概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="非参数概率密度估计概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计">
 <meta name="keywords" content="模式识别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Parzen窗估计和Kn近邻估计">
@@ -97,241 +18,125 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Parzen窗估计和Kn近邻估计">
 <meta name="twitter:description" content="非参数概率密度估计概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"/>
-
-
-
-
-
-  <title> Parzen窗估计和Kn近邻估计 | 1010 </title>
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/uploads/favicons/logo.png">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/uploads/favicons/android-chrome-512x512.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/uploads/favicons/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Parzen窗估计和Kn近邻估计</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
+<body>
     
-  
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/sujunhao">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2017/10/06/Hexo-init/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&text=Parzen窗估计和Kn近邻估计"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&is_video=false&description=Parzen窗估计和Kn近邻估计"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Parzen窗估计和Kn近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&name=Parzen窗估计和Kn近邻估计&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
 
-  <div class="container one-collumn sidebar-position-right page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">1010</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#非参数概率密度估计"><span class="toc-number">1.</span> <span class="toc-text">非参数概率密度估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parzen窗估计"><span class="toc-number">2.</span> <span class="toc-text">Parzen窗估计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数实现"><span class="toc-number">2.1.</span> <span class="toc-text">函数实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kn近邻估计"><span class="toc-number">3.</span> <span class="toc-text">Kn近邻估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">4.</span> <span class="toc-text">测试</span></a></li></ol>
+    </div>
+  </span>
 </div>
 
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="SuJunhao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/favicons/logo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="1010">
-    </span>
-
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Parzen窗估计和Kn近邻估计
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-06T15:45:59+08:00">
-                2017-10-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
+    <h1 class="posttitle" itemprop="name headline">
+        Parzen窗估计和Kn近邻估计
+    </h1>
 
 
-    <div class="post-body" itemprop="articleBody">
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">1010</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-10-06T07:45:59.000Z" itemprop="datePublished">2017-10-06</time>
+    </div>
+
 
       
-      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/模式识别/">模式识别</a>
+    </div>
 
-      
-        <h2 id="非参数概率密度估计"><a href="#非参数概率密度估计" class="headerlink" title="非参数概率密度估计"></a>非参数概率密度估计</h2><p>概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计。</p>
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="非参数概率密度估计"><a href="#非参数概率密度估计" class="headerlink" title="非参数概率密度估计"></a>非参数概率密度估计</h2><p>概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计。</p>
 <p>非参数概率密度估计的思想非常直接，简单来说即是将观测到的频率值来直接估计事件发生的概率（从样本满足独立同分布，计算二项分布概率值再求最最佳估计值得来）。假设事件发生频率 $P(A) = k / n$， 事件中元素个数（面积）乘以每个元素发生的概率（假设每个都相等）为 $V\times p(x)$，假设两者相等即有 $p(x) = \frac{k/n}{V}$。</p>
 <p>当然，假如直接使用 $T = \frac{k/n}{V}$ 来估计概率密度的话是十分粗糙的，但是假如不断调整V(使其趋近0）或k的值使得 $p(x)$ 趋近一个稳定值的话那么便可以用 $T$ 来估计 $p(x)$。根据调整方法的不同可以分为 Parzen 窗口法和 Kn 近邻估计。</p>
 <h2 id="Parzen窗估计"><a href="#Parzen窗估计" class="headerlink" title="Parzen窗估计"></a>Parzen窗估计</h2><p>Parzen窗估计的思想是按一定规律不断缩小V使得T趋近于真实的$p(x)$。</p>
@@ -348,376 +153,122 @@
 <p>上式中$\varphi (\mu)$可以视为核函数，这样其便能使用其他核函数进行替代，例如高斯核函数。</p>
 <h3 id="函数实现"><a href="#函数实现" class="headerlink" title="函数实现"></a>函数实现</h3><p>待续</p>
 <h2 id="Kn近邻估计"><a href="#Kn近邻估计" class="headerlink" title="Kn近邻估计"></a>Kn近邻估计</h2><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2>
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/模式识别/" rel="tag"># 模式识别</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/10/06/Hexo-init/" rel="next" title="Hexo init">
-                <i class="fa fa-chevron-left"></i> Hexo init
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
-
-          
-          </div>
-          
+</article>
 
 
-          
-  <div class="comments" id="comments">
+
+    </div>
     
-  </div>
+      <div id="footer-post-container">
+  <div id="footer-post">
 
-
-        </div>
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/sujunhao">Projects</a></li>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+      </ul>
     </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#非参数概率密度估计"><span class="toc-number">1.</span> <span class="toc-text">非参数概率密度估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parzen窗估计"><span class="toc-number">2.</span> <span class="toc-text">Parzen窗估计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数实现"><span class="toc-number">2.1.</span> <span class="toc-text">函数实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kn近邻估计"><span class="toc-number">3.</span> <span class="toc-text">Kn近邻估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">4.</span> <span class="toc-text">测试</span></a></li></ol>
+    </div>
 
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/favicons/logo.png"
-               alt="SuJunhao" />
-          <p class="site-author-name" itemprop="name">SuJunhao</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-          
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/sujunhao" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/sujunhao" target="_blank" title="Zhihu">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  Zhihu
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#非参数概率密度估计"><span class="nav-number">1.</span> <span class="nav-text">非参数概率密度估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parzen窗估计"><span class="nav-number">2.</span> <span class="nav-text">Parzen窗估计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数实现"><span class="nav-number">2.1.</span> <span class="nav-text">函数实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kn近邻估计"><span class="nav-number">3.</span> <span class="nav-text">Kn近邻估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&text=Parzen窗估计和Kn近邻估计"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&is_video=false&description=Parzen窗估计和Kn近邻估计"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Parzen窗估计和Kn近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&name=Parzen窗估计和Kn近邻估计&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
 
     </div>
-  </aside>
 
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
 
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">SuJunhao</span>
+  </div>
 </div>
 
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-        
-
-        
-      </div>
-    </footer>
-
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 SuJunhao
   </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/sujunhao">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-  
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
         tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
         }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-
-  
-
-  
-
-  
-
-
-  
-
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
