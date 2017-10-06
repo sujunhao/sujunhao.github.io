@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="SuJunhao">
 <meta property="og:description" content="非参数概率密度估计概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-06T11:13:43.428Z">
+<meta property="og:updated_time" content="2017-10-06T11:52:52.846Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Parzen窗估计和Kn近邻估计">
 <meta name="twitter:description" content="非参数概率密度估计概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计">
@@ -142,7 +142,14 @@
 <h2 id="Parzen窗估计"><a href="#Parzen窗估计" class="headerlink" title="Parzen窗估计"></a>Parzen窗估计</h2><p>Parzen窗估计的思想是按一定规律不断缩小V使得T趋近于真实的$p(x)$。</p>
 <p>首先来形式化以上语言。</p>
 <p>对于有$d$个纬度多维空间$R_d$，假设子空间$V_n = h_n^d$，其中n是迭代的计数值，$h$为$V$在坐标系中每个纬度投影的长度。</p>
-<p>假设希望求在空间中$x$坐标下的概率密度，则包含$x$且大小为$V_n$的空间中的向量$y$要满足$|x_i - y_i|/h_n\leq 1/2, i=1,2,..,d$，按此规则可以表达为示性函数：<br>$$<br>\varphi (\mu) = \left{<br> \begin{align}<br>&amp;1 &amp;if |\mu_j|\leq\frac{1}{2} \ \  j=1,…,d   \<br>&amp;0 &amp;otherwise \<br> \end{align}<br>\right.<br>$$<br>其中$\mu_j = |x_i - y_i|/h_n$, 则对于每个样本　$x_i$，是否落入$x$附近就表达为$\varphi (\frac{x-x_i}{h_n})$，这样$P_n(A) = k/n = \frac{\sum\varphi (\frac{x-x_i}{h_n}) }{ｎ}$。令其等于　$V_n \times p_n(x)$即有$p_n = \frac{\sum\varphi (\frac{x-x_i}{h_n}) }{ｎ}/V_n$。</p>
+<p>假设希望求在空间中$x$坐标下的概率密度，则包含$x$且大小为$V_n$的空间中的向量$y$要满足$|x_i - y_i|/h_n\leq 1/2, i=1,2,..,d$，按此规则可以表达为示性函数：</p>
+<!-- \biggl \lbrace -->
+<span>$$\varphi (\mu) = 
+\begin{cases}
+1 \ \ \ \ &amp; if |\mu_j|\leq\frac{1}{2} \ \ j=1,...,d \\
+0 \ \ \ \ &amp; otherwise
+ \end{cases}$$</span><!-- Has MathJax -->
+<p>其中$\mu_j = |x_i - y_i|/h_n$, 则对于每个样本　$x_i$，是否落入$x$附近就表达为$\varphi (\frac{x-x_i}{h_n})$，这样$P_n(A) = k/n = \frac{\sum\varphi (\frac{x-x_i}{h_n}) }{ｎ}$。令其等于　$V_n \times p_n(x)$即有$p_n = \frac{\sum\varphi (\frac{x-x_i}{h_n}) }{ｎ}/V_n$。</p>
 <p>上式中$\varphi (\mu)$可以视为核函数，这样其便能使用其他核函数进行替代，例如高斯核函数。</p>
 <h3 id="函数实现"><a href="#函数实现" class="headerlink" title="函数实现"></a>函数实现</h3><p>待续</p>
 <h2 id="Kn近邻估计"><a href="#Kn近邻估计" class="headerlink" title="Kn近邻估计"></a>Kn近邻估计</h2><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2>
