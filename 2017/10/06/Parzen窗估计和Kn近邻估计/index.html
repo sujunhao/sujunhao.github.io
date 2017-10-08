@@ -9,7 +9,7 @@
     <meta name="description" content="非参数概率密度估计序：概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行">
 <meta name="keywords" content="模式识别,Octave">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Parzen窗估计和Kn近邻估计">
+<meta property="og:title" content="Parzen窗估计和K最近邻估计">
 <meta property="og:url" content="http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/index.html">
 <meta property="og:site_name" content="1010">
 <meta property="og:description" content="非参数概率密度估计序：概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行">
@@ -18,9 +18,10 @@
 <meta property="og:image" content="http://sujunhao.github.io/uploads/data/Parzen_立体.png">
 <meta property="og:image" content="http://sujunhao.github.io/uploads/data/Parzen_高斯.png">
 <meta property="og:image" content="http://sujunhao.github.io/uploads/data/Parzen_分类界面.png">
-<meta property="og:updated_time" content="2017-10-08T02:46:50.376Z">
+<meta property="og:image" content="http://sujunhao.github.io/uploads/data/Euclidean_Voronoi_diagram.svg">
+<meta property="og:updated_time" content="2017-10-08T03:32:33.489Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Parzen窗估计和Kn近邻估计">
+<meta name="twitter:title" content="Parzen窗估计和K最近邻估计">
 <meta name="twitter:description" content="非参数概率密度估计序：概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行">
 <meta name="twitter:image" content="http://sujunhao.github.io/uploads/data/Parzen_数据分布_1.png">
     
@@ -42,7 +43,7 @@
         
     
     <!-- title -->
-    <title>Parzen窗估计和Kn近邻估计</title>
+    <title>Parzen窗估计和K最近邻估计</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- rss -->
@@ -89,20 +90,20 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&text=Parzen窗估计和Kn近邻估计"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&is_video=false&description=Parzen窗估计和Kn近邻估计"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Parzen窗估计和Kn近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&name=Parzen窗估计和Kn近邻估计&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&text=Parzen窗估计和K最近邻估计"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&is_video=false&description=Parzen窗估计和K最近邻估计"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Parzen窗估计和K最近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&name=Parzen窗估计和K最近邻估计&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#非参数概率密度估计"><span class="toc-number">1.</span> <span class="toc-text">非参数概率密度估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parzen窗估计"><span class="toc-number">2.</span> <span class="toc-text">Parzen窗估计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Parzen窗函数实现"><span class="toc-number">2.1.</span> <span class="toc-text">Parzen窗函数实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两类实验数据"><span class="toc-number">2.2.</span> <span class="toc-text">两类实验数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parzen窗概率密度估计测试"><span class="toc-number">2.3.</span> <span class="toc-text">Parzen窗概率密度估计测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于Parzen窗估计的分类"><span class="toc-number">2.4.</span> <span class="toc-text">基于Parzen窗估计的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实际测试"><span class="toc-number">2.4.1.</span> <span class="toc-text">实际测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kn近邻估计"><span class="toc-number">3.</span> <span class="toc-text">Kn近邻估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#非参数概率密度估计"><span class="toc-number">1.</span> <span class="toc-text">非参数概率密度估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parzen窗估计"><span class="toc-number">2.</span> <span class="toc-text">Parzen窗估计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Parzen窗函数实现"><span class="toc-number">2.1.</span> <span class="toc-text">Parzen窗函数实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两类实验数据"><span class="toc-number">2.2.</span> <span class="toc-text">两类实验数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parzen窗概率密度估计测试"><span class="toc-number">2.3.</span> <span class="toc-text">Parzen窗概率密度估计测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于Parzen窗估计的分类"><span class="toc-number">2.4.</span> <span class="toc-text">基于Parzen窗估计的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实际测试"><span class="toc-number">2.4.1.</span> <span class="toc-text">实际测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#K最近邻估计"><span class="toc-number">3.</span> <span class="toc-text">K最近邻估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -114,7 +115,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        Parzen窗估计和Kn近邻估计
+        Parzen窗估计和K最近邻估计
     </h1>
 
 
@@ -141,11 +142,11 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="非参数概率密度估计"><a href="#非参数概率密度估计" class="headerlink" title="非参数概率密度估计"></a>非参数概率密度估计</h2><p>序：概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计。这篇文章会讨论非参数估计的两种方法：Parzen窗估计和Kn近邻估计，并对其相关计算和预测分类过程在Octave语言下进行实现。</p>
+    <h2 id="非参数概率密度估计"><a href="#非参数概率密度估计" class="headerlink" title="非参数概率密度估计"></a>非参数概率密度估计</h2><p>序：概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计。这篇文章会讨论非参数估计的两种方法：Parzen窗估计和K最近邻估计，并对其相关计算和预测分类过程在Octave语言下进行实现。</p>
 <p>非参数概率密度估计的思想非常直接，简单来说即是将观测到事件的概率值来直接估计事件发生的概率再推测基本事件的概率值（从样本满足独立同分布，计算二项分布概率值再求最最佳估计值得来）。假设事件发生频率 $P(A) = k / n$， 事件中元素个数（面积）乘以每个元素发生的概率（假设每个都相等）为 $V\times p(x)$，假设两者相等即有 $p(x) = \frac{k/n}{V}$。</p>
 <p>当然，假如直接使用 $T = \frac{k/n}{V}$ 来估计概率密度的话是十分粗糙的，但是假如不断调整V(使其趋近0）或k的值使得 $p(x)$ 趋近一个稳定值的话那么便可以用 $T$ 来估计 $p(x)$。根据调整方法的不同可以分为 Parzen 窗口法和 Kn 近邻估计。</p>
 <h2 id="Parzen窗估计"><a href="#Parzen窗估计" class="headerlink" title="Parzen窗估计"></a>Parzen窗估计</h2><p>Parzen窗估计的核心思想是按一定规律不断缩小V使得T趋近于真实的$p(x)$，及使用核函数来取代事件的计数频率值。</p>
-<p>首先来形式化以上语言。对于有$d$个纬度多维空间$R_d$，假设子空间$V_n = h_n^d$，其中n是迭代的计数值，$h$为$V$在坐标系中每个纬度投影的长度。假设希望求在空间中$x$坐标下的概率密度，则包含$x$且大小为$V_n$的空间中的向量$y$要满足$|x_i - y_i|/h_n\leq 1/2, i=1,2,..,d$，按此规则可以表达为示性函数：</p>
+<p>首先来形式化以上语言。对于有$d$个纬度多维空间$R_d$，假设子空间$V_n = h_n^d$，其中n是迭代计数，$h$为$V$在坐标系中每个纬度投影的长度。假设希望求在空间中$x$坐标下的概率密度，则包含$x$且大小为$V_n$的空间中的向量$y$要满足$|x_i - y_i|/h_n\leq 1/2, i=1,2,..,d$，按此规则可以表达为示性函数：</p>
 <!-- \biggl \lbrace -->
 <span>$$\varphi (\mu) = 
 \begin{cases}
@@ -159,7 +160,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 超立方体窗口</div><div class="line"># data 为 n*d, point 为1*d</div><div class="line">function [z] = w_hypercube(data, point, h_n)</div><div class="line">	u = (data - point) ./ h_n;</div><div class="line">	z = sum(all((abs(u) &lt;= 0.5), 2));</div><div class="line">end</div><div class="line"></div><div class="line"># 高斯窗口</div><div class="line">pkg load statistics;</div><div class="line">function [z] = w_normal(data, point, h_n)</div><div class="line">	[n, d] = size(data);</div><div class="line">	u = (data - point) ./ h_n;</div><div class="line">	z = sum(mvnpdf(u, zeros(1, d), eye(d)));</div><div class="line">end</div></pre></td></tr></table></figure>
 <p>有了$k$值，就可以计算概率密度，因此有Parzen概率密度估计方程$p_n = \frac{k}{ｎ}/V_n =  \frac{\sum\varphi (\frac{x-x_i}{h_n}) }{ｎ}/V_n$。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># Parzen 函数</div><div class="line">#data is [n * d], dimension X number</div><div class="line">#point is [1 * d]</div><div class="line">#h_n is a scale</div><div class="line">function [pd] = parzen (data, point, h_n, f)</div><div class="line">  [n_data, d_data] = size(data);</div><div class="line">  pd = f(data, point, h_n) / (n_data * (h_n^d_data));</div><div class="line">end</div><div class="line"></div><div class="line">##	parzen(XX, [3, 4], 1, @w_hypercube)</div></pre></td></tr></table></figure>
-<h3 id="两类实验数据"><a href="#两类实验数据" class="headerlink" title="两类实验数据"></a>两类实验数据</h3><p>为了讨论Parzen窗函数的表现下面先来生成下面两类实验数据。</p>
+<h3 id="两类实验数据"><a href="#两类实验数据" class="headerlink" title="两类实验数据"></a>两类实验数据</h3><p>为了讨论Parzen窗函数的表现下面先来生成下面两类实验数据（各维服从独立高斯分布，两类别分布有重叠）。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># 生成二维高斯分布数据函数</div><div class="line">function [x] = create_norm(mu1, sigma1, mu2, sigma2, n)</div><div class="line">x = [normrnd(mu1, sigma1, 1, n); normrnd(mu2, sigma2, 1, n)]&apos;;</div><div class="line">end</div><div class="line"></div><div class="line"># X1为第一类，X2为第二类</div><div class="line"># X1为服从正态分布且中心点在(5,4),各分量sigma为(1,0.5)的数据，样本数量为500</div><div class="line"># 两类数据真实分布有重叠，如下图</div><div class="line">[mu11, s11, mu12, s12, n1] = deal(5, 1, 4, 0.5, 500);</div><div class="line">[mu21, s21, mu22, s22, n2] = deal(8, 0.5, 4, 1, 500);</div><div class="line">X1 = create_norm(mu11, s11, mu12, s12, n1);</div><div class="line">X2 = create_norm(mu21, s21, mu22, s22, n2);</div><div class="line"></div><div class="line"># 合并数据</div><div class="line">XX = [X1;X2];</div><div class="line"></div><div class="line"># 画出数据分布</div><div class="line">plot(X1(:,1), X1(:,2), &apos;r+&apos;, X2(:,1), X2(:,2), &apos;bo&apos;, ...</div><div class="line">	mu11, mu12, &apos;+k&apos;, mu21, mu22, &apos;+k&apos;);</div></pre></td></tr></table></figure>
 <p><img src="/uploads/data/Parzen_数据分布_1.png" alt="Parzen_数据分布"></p>
 <h3 id="Parzen窗概率密度估计测试"><a href="#Parzen窗概率密度估计测试" class="headerlink" title="Parzen窗概率密度估计测试"></a>Parzen窗概率密度估计测试</h3><p>下面先将两类数据合为总数据集，再查看Parzen概率密度估计的效果。</p>
@@ -170,12 +171,12 @@
 <p><img src="/uploads/data/Parzen_高斯.png" alt="parzen_norm"></p>
 <p>明显高斯窗比立方体窗平滑，并可以看出随着窗口宽度的减小（从2降到0.5），估计的概率值峰值增大（高斯窗的峰值从0.02增大到0.18，立体窗的峰值从0.1增大到0.5），且分布的广度变小。</p>
 <h3 id="基于Parzen窗估计的分类"><a href="#基于Parzen窗估计的分类" class="headerlink" title="基于Parzen窗估计的分类"></a>基于Parzen窗估计的分类</h3><p>由于Parzen窗估计能估计出概率密度值，在进行分类的时候，只要知道$P(w_i|x)$便可以根据观测值$x$在各种类别中进行分类（类别为$w_1, w2, …, w_c$）。根据贝叶斯公式$P(w_i|X) \propto P(w_i) \times P(X|w_i)$。因此可以通过Parzen窗口估计不同类别下的$P(x|w_i)$值，就可以知道后验$P(w_i|x)$概率值从而对样本$x$进行分类。现在根据数据的类别标签将数据分为两个数据集，再分别在两个类别下进行概率密度估计 ，可以得到分类界面。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">function [z] = train_parzen(X1, X2, h, f)</div><div class="line">  x = 0:0.1:10;</div><div class="line">  y = x;</div><div class="line">  [X,Y] = meshgrid(x);</div><div class="line">  n_1 = size(X1, 1);</div><div class="line">  n_2 = size(X2, 1);</div><div class="line">  n = size(x, 2);</div><div class="line">  Z = zeros(n, n);</div><div class="line">  for i=1:n</div><div class="line">    for j=1:n</div><div class="line">      Z(i, j) = parzen(X1, [x(i), y(j)], h, f)*n_1 &gt; ...</div><div class="line">      	parzen(X2, [x(i), y(j)], h, f)*n_2;</div><div class="line">    end</div><div class="line">  end</div><div class="line">  #Z_scale = (Z-min(Z(:))) ./ (max(Z(:)-min(Z(:))));</div><div class="line">  plot(X(Z(:)==0), Y(Z(:)==0), &apos;bo&apos;, ...</div><div class="line">  		X(Z(:)==1), Y(Z(:)==1), &apos;r.&apos;, ...</div><div class="line">  		5, 4, &apos;+k&apos;, 8, 4, &apos;+k&apos;);</div><div class="line">end </div><div class="line"></div><div class="line"></div><div class="line">#plot(X(Z(:)==0), Y(Z(:)==0),&apos;.r&apos;,&apos;markersize&apos;, 20); </div><div class="line">#hold on </div><div class="line">#plot(X(Z(:)==1), Y(Z(:)==1),&apos;^b&apos;, &apos;markersize&apos;, 7); </div><div class="line"></div><div class="line"></div><div class="line">#f = @w_normal;</div><div class="line">f = @w_hypercube;</div><div class="line">h = 0.5;</div><div class="line">res = train_parzen(X1, X2, h, f);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">function [z] = train_parzen(X1, X2, h, f)</div><div class="line">  x = 0:0.1:10;</div><div class="line">  y = x;</div><div class="line">  [X,Y] = meshgrid(x);</div><div class="line">  n_1 = size(X1, 1);</div><div class="line">  n_2 = size(X2, 1);</div><div class="line">  n = size(x, 2);</div><div class="line">  Z = zeros(n, n);</div><div class="line">  for i=1:n</div><div class="line">    for j=1:n</div><div class="line">      Z(i, j) = parzen(X1, [x(i), y(j)], h, f)*n_1 &gt; ...</div><div class="line">		parzen(X2, [x(i), y(j)], h, f)*n_2;</div><div class="line">    end</div><div class="line">  end</div><div class="line">  #Z_scale = (Z-min(Z(:))) ./ (max(Z(:)-min(Z(:))));</div><div class="line">  plot(X(Z(:)==0), Y(Z(:)==0), &apos;bo&apos;, ...</div><div class="line">		X(Z(:)==1), Y(Z(:)==1), &apos;r.&apos;, ...</div><div class="line">		5, 4, &apos;+k&apos;, 8, 4, &apos;+k&apos;);</div><div class="line">end </div><div class="line"></div><div class="line"></div><div class="line">#plot(X(Z(:)==0), Y(Z(:)==0),&apos;.r&apos;,&apos;markersize&apos;, 20); </div><div class="line">#hold on </div><div class="line">#plot(X(Z(:)==1), Y(Z(:)==1),&apos;^b&apos;, &apos;markersize&apos;, 7); </div><div class="line"></div><div class="line"></div><div class="line">#f = @w_normal;</div><div class="line">f = @w_hypercube;</div><div class="line">h = 0.5;</div><div class="line">res = train_parzen(X1, X2, h, f);</div></pre></td></tr></table></figure>
 <p>在窗口宽度为0.5时，在不同的窗口函数下分类界面如下：</p>
 <p><img src="/uploads/data/Parzen_分类界面.png" alt="Parzen_分类界面"></p>
 <p>从图上的效果来看，直接用Parzen窗得到的分类效果在泛化时效果不好，因为很多边缘区域并不能很好的分类（若考虑拒识的情况则会有大量空白），这是因为Parzen窗的到的概率值完全取决于其周边数据的分布，若周围样本稀疏，Parzen窗函数并不能得到一个合适的概率值。进一步可以看出在两个类别分布类似且有重叠时用超立方函数将两类分开较好。</p>
 <h4 id="实际测试"><a href="#实际测试" class="headerlink" title="实际测试"></a>实际测试</h4><p>下面由原分布生成数据进行测试，比较在不同的窗口函数和窗口宽度下分类的正确率。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"># 生成测试数据</div><div class="line">Y1 = create_norm(5, 1, 4, 0.5, 100);</div><div class="line">Y2 = create_norm(8, 0.5, 4, 1, 100);</div><div class="line">Y = [Y1;Y2];</div><div class="line">class_Y = [ones(100, 1); zeros(100, 1)];</div><div class="line"># 预测类别</div><div class="line">function [z] = predict_parzen(X1, X2, x, h, f)</div><div class="line">  n = size(x, 1);</div><div class="line">  P = zeros(n, 1);</div><div class="line">  n_1 = size(X1, 1);</div><div class="line">  n_2 = size(X2, 1);</div><div class="line">  for i=1:n</div><div class="line">  	point = [x(i, 1), x(i, 2)];</div><div class="line">  	# 1 if predict to class X1</div><div class="line">	P(i) = (parzen(X1, point, h, f)*n_1 &gt; ...</div><div class="line">			parzen(X2, point, h, f)*n_2);</div><div class="line">  end</div><div class="line">  #Z_scale = (Z-min(Z(:))) ./ (max(Z(:)-min(Z(:))));</div><div class="line">  z = P;</div><div class="line">end </div><div class="line"></div><div class="line">function [z] = pre_rate(Y, pre_Y)</div><div class="line">	z = sum(Y == pre_Y) / size(Y, 1);</div><div class="line">end</div><div class="line"></div><div class="line">#f = @w_hypercube;</div><div class="line">f = @w_normal;</div><div class="line">h = 1;</div><div class="line">pre_Y = predict_parzen(X1, X2, Y, h, f);</div><div class="line">pre_rate(class_Y, pre_Y)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"># 生成测试数据</div><div class="line">Y1 = create_norm(5, 1, 4, 0.5, 100);</div><div class="line">Y2 = create_norm(8, 0.5, 4, 1, 100);</div><div class="line">Y = [Y1;Y2];</div><div class="line">class_Y = [ones(100, 1); zeros(100, 1)];</div><div class="line"># 预测类别</div><div class="line">function [z] = predict_parzen(X1, X2, x, h, f)</div><div class="line">  n = size(x, 1);</div><div class="line">  P = zeros(n, 1);</div><div class="line">  n_1 = size(X1, 1);</div><div class="line">  n_2 = size(X2, 1);</div><div class="line">  for i=1:n</div><div class="line">  	point = [x(i, 1), x(i, 2)];</div><div class="line">  	# 1 if predict to class X1</div><div class="line">	P(i) = (parzen(X1, point, h, f)*n_1 &gt; ...</div><div class="line">		parzen(X2, point, h, f)*n_2);</div><div class="line">  end</div><div class="line">  #Z_scale = (Z-min(Z(:))) ./ (max(Z(:)-min(Z(:))));</div><div class="line">  z = P;</div><div class="line">end </div><div class="line"></div><div class="line">function [z] = pre_rate(Y, pre_Y)</div><div class="line">	z = sum(Y == pre_Y) / size(Y, 1);</div><div class="line">end</div><div class="line"></div><div class="line">#f = @w_hypercube;</div><div class="line">f = @w_normal;</div><div class="line">h = 1;</div><div class="line">pre_Y = predict_parzen(X1, X2, Y, h, f);</div><div class="line">pre_rate(class_Y, pre_Y)</div></pre></td></tr></table></figure>
 <p>测试结果：</p>
 <table>
 <thead>
@@ -208,8 +209,12 @@
 </tr>
 </tbody>
 </table>
-<p>从结果来看使用立方体窗口的预测效果略好于高斯窗口的情况，但是差别并不大。两种窗口对样本的分类效果都较好$\geq 95\%$，这点如果单从分类界面是看不出来的。</p>
-<h2 id="Kn近邻估计"><a href="#Kn近邻估计" class="headerlink" title="Kn近邻估计"></a>Kn近邻估计</h2><p>待续</p>
+<p>从结果来看使用立方体窗口的预测效果略好于高斯窗口的情况，但是差别并不大。两种窗口对样本的分类效果都较好$\geq 95\%$，这点单从分类界面是看不出来的。</p>
+<h2 id="K最近邻估计"><a href="#K最近邻估计" class="headerlink" title="K最近邻估计"></a>K最近邻估计</h2><p>Parzen窗口法和K最近邻（The k-nearest neighbor）的目的都是计算$p_n = \frac{k}{ｎ}/V_n$，不同的是Parzen窗口选择在迭代的过程不断固定$V_n$来计算$p_n$，而K选择不断固定一个$k$值来计算$p_n$。K最近邻的计算过程是对于固定的$k$值，在待测空间点附近找到一个区域$V_n$使得落入该区域的样本点刚好有$k$个。</p>
+<p>对于使用概率密度来进行分类时，对于一个固定的$k$，找到一个$V_n$（将所有类别的样本合为总体）之后下一步的计算时找到最大的$P(w_i|x) \propto P(w_i) \times P(x|w_i)$，对于恒定$P(w_i)$ 的情况，即找到最大的$P(x|w_i) =  \frac{k_i}{ｎ}/V_n$，又由于此时$n, V_n$（总样本量，固定k值下找到的空间）对于所有$i$（每个类别）都是固定的，因此只需找到类别$i$使得其落入在空间$V_n$次数最多。于是，K最近邻的分类就变成在待测空间找到相邻的$k$个样本点，这些样本点中类别出现次数最多的类别$i$就会有最大的$P(w_i|x)$。</p>
+<p>由于K最近邻计算中有一个找$V_n$的过程，即找在待测空间点附近每个维度距离小于$h_n/2$的区域，在这个过程中距离的度量除了使用欧几里得距离外还可以使用其他距离度量，如曼哈顿距离等。</p>
+<p>题外话，在二维空间下，对每个样本点都赋唯一的类别标签，在$k=1$下画得的分类界面图即是<a href="https://en.wikipedia.org/wiki/Voronoi_diagram" target="_blank" rel="external">Voronoi图</a>。下图为在欧几里得距离下的Voronoi diagram（来自wikipedia）。</p>
+<p><img src="/uploads/data/Euclidean_Voronoi_diagram.svg" alt="Euclidean_Voronoi_diagram"></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li><a href="http://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank" rel="external">http://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm</a></li>
 <li><a href="http://sebastianraschka.com/Articles/2014_kernel_density_est.html" target="_blank" rel="external">http://sebastianraschka.com/Articles/2014_kernel_density_est.html</a></li>
@@ -240,21 +245,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#非参数概率密度估计"><span class="toc-number">1.</span> <span class="toc-text">非参数概率密度估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parzen窗估计"><span class="toc-number">2.</span> <span class="toc-text">Parzen窗估计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Parzen窗函数实现"><span class="toc-number">2.1.</span> <span class="toc-text">Parzen窗函数实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两类实验数据"><span class="toc-number">2.2.</span> <span class="toc-text">两类实验数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parzen窗概率密度估计测试"><span class="toc-number">2.3.</span> <span class="toc-text">Parzen窗概率密度估计测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于Parzen窗估计的分类"><span class="toc-number">2.4.</span> <span class="toc-text">基于Parzen窗估计的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实际测试"><span class="toc-number">2.4.1.</span> <span class="toc-text">实际测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kn近邻估计"><span class="toc-number">3.</span> <span class="toc-text">Kn近邻估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#非参数概率密度估计"><span class="toc-number">1.</span> <span class="toc-text">非参数概率密度估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parzen窗估计"><span class="toc-number">2.</span> <span class="toc-text">Parzen窗估计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Parzen窗函数实现"><span class="toc-number">2.1.</span> <span class="toc-text">Parzen窗函数实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两类实验数据"><span class="toc-number">2.2.</span> <span class="toc-text">两类实验数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parzen窗概率密度估计测试"><span class="toc-number">2.3.</span> <span class="toc-text">Parzen窗概率密度估计测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于Parzen窗估计的分类"><span class="toc-number">2.4.</span> <span class="toc-text">基于Parzen窗估计的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实际测试"><span class="toc-number">2.4.1.</span> <span class="toc-text">实际测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#K最近邻估计"><span class="toc-number">3.</span> <span class="toc-text">K最近邻估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&text=Parzen窗估计和Kn近邻估计"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&is_video=false&description=Parzen窗估计和Kn近邻估计"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Parzen窗估计和Kn近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和Kn近邻估计"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&name=Parzen窗估计和Kn近邻估计&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&text=Parzen窗估计和K最近邻估计"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&is_video=false&description=Parzen窗估计和K最近邻估计"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Parzen窗估计和K最近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&name=Parzen窗估计和K最近邻估计&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -293,21 +298,6 @@
   </div>
 </footer>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
 <!-- styles -->
