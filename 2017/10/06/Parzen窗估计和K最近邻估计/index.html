@@ -10,7 +10,7 @@
 <meta name="keywords" content="Octave,模式识别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Parzen窗估计和K最近邻估计">
-<meta property="og:url" content="http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/index.html">
+<meta property="og:url" content="http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/index.html">
 <meta property="og:site_name" content="1010">
 <meta property="og:description" content="非参数概率密度估计序：概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行">
 <meta property="og:locale" content="zh-Hans">
@@ -88,16 +88,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&text=Parzen窗估计和K最近邻估计"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&is_video=false&description=Parzen窗估计和K最近邻估计"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Parzen窗估计和K最近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&name=Parzen窗估计和K最近邻估计&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&text=Parzen窗估计和K最近邻估计"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&is_video=false&description=Parzen窗估计和K最近邻估计"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Parzen窗估计和K最近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&name=Parzen窗估计和K最近邻估计&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -280,16 +280,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&text=Parzen窗估计和K最近邻估计"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&is_video=false&description=Parzen窗估计和K最近邻估计"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Parzen窗估计和K最近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和Kn近邻估计/&name=Parzen窗估计和K最近邻估计&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&text=Parzen窗估计和K最近邻估计"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&is_video=false&description=Parzen窗估计和K最近邻估计"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Parzen窗估计和K最近邻估计&body=Check out this article: http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&title=Parzen窗估计和K最近邻估计"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://sujunhao.github.io/2017/10/06/Parzen窗估计和K最近邻估计/&name=Parzen窗估计和K最近邻估计&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -328,21 +328,6 @@
   </div>
 </footer>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
 <!-- styles -->
