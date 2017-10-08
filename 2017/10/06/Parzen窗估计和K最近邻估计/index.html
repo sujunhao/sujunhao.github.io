@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://sujunhao.github.io/uploads/data/Parzen_分类界面.png">
 <meta property="og:image" content="http://sujunhao.github.io/uploads/data/Euclidean_Voronoi_diagram.svg.png">
 <meta property="og:image" content="http://sujunhao.github.io/uploads/data/KNN_pdf.png">
-<meta property="og:updated_time" content="2017-10-08T06:41:13.651Z">
+<meta property="og:updated_time" content="2017-10-08T07:11:03.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Parzen窗估计和K最近邻估计">
 <meta name="twitter:description" content="非参数概率密度估计序：概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行">
@@ -148,6 +148,7 @@
 <p>首先来形式化以上语言。对于有$d$个纬度多维空间$R_d$，假设子空间$V_n = h_n^d$，其中n是迭代计数，$h$为$V$在坐标系中每个纬度投影的长度。假设希望求在空间中$x$坐标下的概率密度，则包含$x$且大小为$V_n$的空间中的向量$y$要满足$|x_i - y_i|/h_n\leq 1/2, i=1,2,..,d$（既$y$要位于$x$周围的一个超立方体内）。按此规则可以表达为示性函数：</p>
 <!-- \biggl \lbrace -->
 <span>$$\varphi (\mu) = 
+
 \begin{cases}
 1 \ \ \ \ &amp; if |\mu_j|\leq\frac{1}{2} \ \ j=1,...,d \\
 0 \ \ \ \ &amp; otherwise
