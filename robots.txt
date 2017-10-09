@@ -13,4 +13,5 @@ DisAllow: /js/
 DisAllow: /lib/
 
 Sitemap: http://joshua.galaxy.42dna.com/sitemap.xml
+Sitemap: http://joshua.galaxy.42dna.com/baidusitemap.xml
 
