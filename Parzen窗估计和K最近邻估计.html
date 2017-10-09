@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/Parzen_分类界面.png">
 <meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/Euclidean_Voronoi_diagram.svg.png">
 <meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/KNN_pdf.png">
-<meta property="og:updated_time" content="2017-10-09T11:36:31.104Z">
+<meta property="og:updated_time" content="2017-10-09T11:38:42.212Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Parzen窗估计和K最近邻估计">
 <meta name="twitter:description" content="非参数概率密度估计概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计">
@@ -363,7 +363,7 @@
         <h2 id="非参数概率密度估计"><a href="#非参数概率密度估计" class="headerlink" title="非参数概率密度估计"></a>非参数概率密度估计</h2><p>概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计。这篇文章会讨论非参数估计的两种方法：Parzen窗估计和K最近邻估计，并对其中的概率密度估计和预测分类过程进行Octave语言实现。</p>
 <a id="more"></a>
 <p>非参数概率密度估计的思想非常直接，简单来说即是将观测到事件的概率值来估计事件发生的概率再推测基本事件的概率值（从样本满足独立同分布，计算二项分布概率值再求最佳估计值得来）。假设事件发生频率 $P(A) = k / n$， 事件中元素个数（二维空间下的面积）乘以每个元素发生的概率（假设每个都相等）为 $V\times p(x)$，假设两者相等即有 $p(x) = \frac{k/n}{V}$。</p>
-<p>当然，假如直接使用 $T = \frac{k/n}{V}$ 来估计概率密度的话是十分粗糙的，但是假如不断调整V(使其趋近0）或k的值使得 $p(x)$ 趋近一个稳定值的话那么便可以用 $T$ 来估计 $p(x)$。根据调整方法的不同可以分为 Parzen 窗口法和 Kn 近邻估计。</p>
+<p>当然，假如直接使用 $T = \frac{k/n}{V}$ 来估计概率密度的话是十分粗糙的，但是假如不断调整V(使其趋近0）或k的值使得 $p(x)$ 趋近一个稳定值的话那么便可以用 $T$ 来估计 $p(x)$。根据调整方法的不同可以分为 Parzen 窗口法和 K最近邻估计法。</p>
 <h2 id="Parzen窗估计"><a href="#Parzen窗估计" class="headerlink" title="Parzen窗估计"></a>Parzen窗估计</h2><p>Parzen窗估计的核心思想是按一定规律不断缩小$V$使得 $\frac{k/n}{V}$ 趋近于真实的$p(x)$。Parzen窗泛化后可以使用其他核函数来取代事件的计数频率值。</p>
 <p>首先来形式化以上语言。对于有$d$个纬度多维空间$R_d$，假设子空间$V_n = h_n^d$，其中n是迭代计数，$h$为$V$在坐标系中每个纬度投影的长度。假设希望求在空间中$x$坐标下的概率密度，则包含$x$且大小为$V_n$的空间中的向量$y$要满足$|x_i - y_i|/h_n\leq 1/2, i=1,2,..,d$（既$y$要位于$x$周围的一个超立方体内）。按此规则可以表达为示性函数：</p>
 <span>$$\varphi (\mu) = 
