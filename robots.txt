@@ -6,6 +6,7 @@ Allow: /archives/
 Allow: /categories/
 Allow: /tags/
 
+DisAllow: /CNAME
 DisAllow: /uploads/
 DisAllow: /images/
 DisAllow: /css/
