@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://joshua.galaxy.42dna.com/Linear-classifier-Perceptron-and-Relaxation-alg.html</loc>
-    <lastmod>2017-10-24T08:01:31.742Z</lastmod>
+    <lastmod>2017-10-24T08:08:05.561Z</lastmod>
     <data>
         <display>
         <title>线性判别函数，感知器和松弛算法</title>
@@ -32,9 +32,9 @@
         <title>Parzen窗估计和K最近邻估计</title>
         <pubTime>2017-10-06T07:45:59.000Z</pubTime>
         
-        <tag>Octave</tag>
-         
         <tag>模式识别</tag>
+         
+        <tag>Octave</tag>
          
          
            
