@@ -5,17 +5,17 @@
     
   <url>
     <loc>http://joshua.galaxy.42dna.com/Linear-classifier-Perceptron-and-Relaxation-alg.html</loc>
-    <lastmod>2017-10-23T03:01:22.962Z</lastmod>
+    <lastmod>2017-10-24T08:01:31.742Z</lastmod>
     <data>
         <display>
-        <title>线性分类器，感知器和松弛算法</title>
+        <title>线性判别函数，感知器和松弛算法</title>
         <pubTime>2017-10-23T07:05:49.000Z</pubTime>
         
         <tag>模式识别</tag>
          
-        <tag>线性分类器</tag>
-         
         <tag>Python</tag>
+         
+        <tag>感知器</tag>
          
          
            
