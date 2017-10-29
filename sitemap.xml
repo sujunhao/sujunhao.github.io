@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://joshua.galaxy.42dna.com/Neural-Networks.html</loc>
+    
+    <lastmod>2017-10-29T06:38:07.285Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://joshua.galaxy.42dna.com/Linear-classifier-Perceptron-and-Relaxation-alg.html</loc>
     
-    <lastmod>2017-10-24T08:08:05.561Z</lastmod>
+    <lastmod>2017-10-25T11:34:24.335Z</lastmod>
     
   </url>
   

@@ -1,0 +1,879 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="baidu-site-verification" content="ijACEcyFLB" />
+<meta name="msvalidate.01" content="51F2CF0067B8FA47AAB25A13FA69E7D3" />
+
+
+  <meta name="google-site-verification" content="SoDKWZ6myKUl6a-ZeWbDiBMIfz5p8LYqjyN5d1PycNU" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="模式识别,Python,神经网络,函数求导," />
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="神经网络是人工智能和统计学习等领域研究的热点，其能将样本特征映射至高维空间进行分类/回归。本文梳理了神经网络的结构及其学习算法，并在Python下进行实现及测试。">
+<meta name="keywords" content="模式识别,Python,神经网络,函数求导">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络结构、学习与实现">
+<meta property="og:url" content="http://joshua.galaxy.42dna.com/Neural-Networks.html">
+<meta property="og:site_name" content="1010">
+<meta property="og:description" content="神经网络是人工智能和统计学习等领域研究的热点，其能将样本特征映射至高维空间进行分类/回归。本文梳理了神经网络的结构及其学习算法，并在Python下进行实现及测试。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/Neural-Networks/single_unit.png">
+<meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/Neural-Networks/NN_structure.png">
+<meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/Neural-Networks/perceptron.png">
+<meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/Neural-Networks/nn_predict_act.png">
+<meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/Neural-Networks/nn_predict.png">
+<meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/Neural-Networks/nn_predict_epochs.png">
+<meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/Neural-Networks/nn_predict_layer.png">
+<meta property="og:updated_time" content="2017-10-29T06:38:07.285Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="神经网络结构、学习与实现">
+<meta name="twitter:description" content="神经网络是人工智能和统计学习等领域研究的热点，其能将样本特征映射至高维空间进行分类/回归。本文梳理了神经网络的结构及其学习算法，并在Python下进行实现及测试。">
+<meta name="twitter:image" content="http://joshua.galaxy.42dna.com/uploads/Neural-Networks/single_unit.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://joshua.galaxy.42dna.com/Neural-Networks.html"/>
+
+
+
+
+
+  <title> 神经网络结构、学习与实现 | 1010 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-59755062-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?90ed5988844f2b5f8118a85705d84cdc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">1010</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://joshua.galaxy.42dna.com/Neural-Networks.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SuJunhao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/favicons/logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="1010">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                神经网络结构、学习与实现
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-25T19:36:08+08:00">
+                2017-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>神经网络是人工智能和统计学习等领域研究的热点，其能将样本特征映射至高维空间进行分类/回归。本文梳理了神经网络的结构及其学习算法，并在Python下进行实现及测试。</p>
+<a id="more"></a>
+<h1 id="神经网络的结构与学习"><a href="#神经网络的结构与学习" class="headerlink" title="神经网络的结构与学习"></a>神经网络的结构与学习</h1><h2 id="神经元与网络结构"><a href="#神经元与网络结构" class="headerlink" title="神经元与网络结构"></a>神经元与网络结构</h2><p>神经网络(Neural Network, NN)是一种模仿生物神经网络(动物的中枢神经系统，特别是大脑)的结构和功能的数学模型或计算模型，用于对函数进行估计或近似 [1]。神经网络的输入是单个样本的特征值向量，输出也是一个向量。神经网络由多个神经元组成。单个神经元的结构如下图：</p>
+<p><img src="/uploads/Neural-Networks/single_unit.png" alt="neuron"></p>
+<p>单个神经元的输入是多维向量，输出为一个数。具体的，对于每个神经元，其对应的计算过程为：先对多维向量赋权重求和得到$net_j$值，计算为$ net_j = \sum w_i x_i + b_j$ ，其中$w_i$为输入信号的权重参数，$b_j$为偏差量。 再对$net_j$值做非线性变换得到输出值，输出值计算为 $z_j =  \sigma (net_j) $，其中$ \sigma(\cdot) $是一个非线性变换函数，其导数通常可以通过原始函数值进行计算。常用的非线性变换函数有：</p>
+<ul>
+<li>Logistic-Sigmoid函数：$\sigma(x) = \frac{1}{1+e^{-x}}$，其导数为 $\sigma ‘(x) = \sigma(x) (1- \sigma(x))$</li>
+<li>Tanh-Sigmoid函数：$tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$，其导数为 $tanh’(x) =  1 - tanh^2(x)$ </li>
+<li>Softplus函数：$f(x) = log(1+e^x)$，其导数为 $f’(x) = \frac{e^x}{1+e^x} = \frac{1}{1+e^{-x}} = \sigma(x)$ </li>
+<li>ReLu函数：$f(x) =  max(0, x)$，其导数在$x&gt;0$时为$1$，在$x&lt;=0$时为$0$ </li>
+</ul>
+<p>神经网络通常为按层级排列的多层结构组成，例如下图的三层神经网络，三层分别为输入层、隐藏层和输出层。输出层每个神经元对应一个目标值。例如在$c-$类分类问题中，若样本$x$的真实类别为第$k$个类别，则目标输出为 $t_i = 0 \ if \ i != k \ else \ t_i = 1$ 。</p>
+<p><img src="/uploads/Neural-Networks/NN_structure.png" alt="NN_structure"></p>
+<h3 id="神经网络输出"><a href="#神经网络输出" class="headerlink" title="神经网络输出"></a>神经网络输出</h3><p>神经网络输出过程会按网络的拓扑顺序算出每个节点值。下面以使用三层神经网络计算不同类别后验概率值为例进行说明。首先，若希望神经网络最后的输出值 $z_k$ 为对应第$k$个类别的概率值，则可对输出层的输出值进行Softmax函数处理，$Softmax(z_k) = \frac{e^{z_k}}{\sum e^{z_j}} = p_k$，其中$z_k$为输出层第$k$个节点的输出值。现在从输入层开始进行对每个节点关联的值进行计算：在已知输入向量$x$及初始化了各层权重的情况下（记第$h$层（有$i$个节点）到$h+1$层（有$j$个节点）之间的权重记为$W^{(h+1)}$,其为一个$j \times i$的矩阵），各层节点值的计算顺序为：$net^{(2)} -&gt; z^{(2)} -&gt; net^{(3)} -&gt; z^{(3)}  -&gt; p^{(3)}$，其中$net^{(2)}$表示值向量，即上图中第二层（隐藏层）所有全体$net_j^{(2)}$组成的向量，$z_j = f(net_j)$，$p_k = softmax(z_k)$。将此计算过程向量化，则有：</p>
+<ul>
+<li>$net^{(2)} = W^{(1)}x$</li>
+<li>$z^{(2)} = f(net^{(2)})$， </li>
+<li>$net^{(3)} = W^{(2)}z^{(2)}$</li>
+<li>$z^{(3)} = f(net^{(3)})$</li>
+<li>$p^* = exp(z^{(2)})$</li>
+<li>$p = \frac{p<em>}{sum(p</em>)}$</li>
+</ul>
+<p>总的来说上述迭代计算的过程即对应<strong>神经网络代表的函数</strong>，其输入为$x$，函数中有参数$W^{(h)}$，输出为$p$。只要给定$W^{(h)}$及$x$，以上所有值$net^{(\cdot )}, z^{(\cdot )}, p$ 都是确定的。</p>
+<h2 id="NN学习"><a href="#NN学习" class="headerlink" title="NN学习"></a>NN学习</h2><p>参数的学习过程是最优化的过程，其过程与感知器的学习相似，即对参数定义损失函数，在搜索空间内找最优的参数值使得损失函数值最小。</p>
+<h3 id="定义损失函数与更新规则"><a href="#定义损失函数与更新规则" class="headerlink" title="定义损失函数与更新规则"></a>定义损失函数与更新规则</h3><p>损失函数是模型参数$W$的函数，其作用是衡量出在特定参数下，NN最终输出向量$Z$与目标向量 $T$之间的差异。对于回归问题，可以设置单个样本的损失函数为$J(W) = 1/2  \sum (t_k - z_k)^2 = 1/2 (T-Z)^2$；对于分类问题，由于NN的输出值是样本对于每个类别的后验概率$P(c_k | x)$，其目标向量$T$为样本的真实概率 $P(c_k|x) = 1 \ if  \ x\in c_k\ ,else P(c_k |x)=0$。衡量两个概率向量差异的一种方式是使用<a href="https://www.wikiwand.com/en/Cross_entropy#/Cross-entropy_error_function_and_logistic_regression" target="_blank" rel="external">交叉熵函数</a>，对于预测概率$P$和真实概率$T$（$\sum_i ti = 1$ ） ，交叉熵计算为$J= -\sum_i t_i log (p_i) $，其中$p_i = softmax(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}}$。为了方便下面的说明，下面先分别将softmax函数和交叉熵函数和对输入$ a_i$进行求导。</p>
+<ul>
+<li><p>Softmax 函数对$a_k$求导有：$\partial p_i / \partial a_k = p_i(1-p_i), i = k $ ，和$\partial p_i / \partial a_k = -p_i p_k, i \neq k $</p>
+</li>
+<li><p>交叉熵对$a_k$求导有：<br>$$<br>\frac{\partial J}{\partial z_k}  = \sum_u \frac{\partial J}{\partial p_u} \frac{\partial p_u}{\partial z_k } = \sum_u (- \frac{t_u }{p_u} \frac{\partial p_u }{\partial z_k}) =    - \frac{t_k }{p_k} \frac{\partial p_k }{\partial z_k} -\sum_u \frac{t_i }{p_i} \frac{\partial p_i }{\partial z_k}<br>$$<br>其中$u = \{ i \neq k \}$，进而$\frac{\partial J}{\partial z_k} = - \frac{t_k }{p_k} p_k(1-p_k) + \sum_u \frac{t_i }{p_i} p_ip_k  = \frac{\partial J}{\partial z_k} = -t_k+ \sum_i t_i p_k  = p_k  -t_k $。</p>
+</li>
+</ul>
+<p>有了单个样本的函数就可以求权重对样本集的损失值，例如将所有样本的损失值求和或求平均值作为样本集的损失值。在分类问题中，可以设置样本集的损失函数为$J(W) = \sum_k^m J(W, x_k) = \sum_k \sum_i -t_i log (p_i)  $，其中$m$为样本集容量。有了损失值就可使用梯度下降法对参数进行迭代求解。下面是权重参数的更新规则（对单个样本而言）：</p>
+<p>$W(n+1) = W(n) - \eta \frac{\partial J}{\partial W(n)} $，其中$\eta$ 是每次更新的步长，记 $\Delta W(n) = \frac{\partial J}{\partial W(n)}$，则更新规则为$W(n+1) = W(n)  -  \eta\Delta W(n)$。同理，偏移量$b$的修改规则为$b(n+1) = b(n)  -  \eta\Delta b(n)$，其中$\Delta b(n) = \frac{\partial J}{\partial b(n)}$</p>
+<p>对样本集而言，根据$J(W) = \sum_k^m J(W, x_k) $，这里需要将$\Delta W(n)$修改为$\sum_k^m \Delta W_k(n)$ ，及$\Delta b(n)$修改为$\sum_k^m \Delta b_k(n)$ 。</p>
+<h3 id="反向传播算法"><a href="#反向传播算法" class="headerlink" title="反向传播算法"></a>反向传播算法</h3><p>有了以上更新规则就可以对权重$W$进行迭代求解，从更新规则来看，需要计算出 $\Delta W$ 。该计算过程可以使用反向传播算法。反向传播算法求导思想一个很好的解释可以见<a href="https://colah.github.io/posts/2015-08-Backprop/" target="_blank" rel="external">此博客</a> 。总的来说：</p>
+<ol>
+<li>对于复杂网络的求导，导数值是从输入到输出所有路径导数的和，而每条路径的导数可以使用链式法则进行计算；</li>
+<li>反向传播过程即从终点开始$J$，按网络结构的拓扑序的逆序顺序对所有端点求 $\frac{\partial J}{\partial (\cdot )}$ 。</li>
+</ol>
+<h3 id="参数学习"><a href="#参数学习" class="headerlink" title="参数学习"></a>参数学习</h3><p>有了以上损失函数、更新规则和导数求导的方法，现在可以对神经网络中的权重$W， b$进行求导，并根据导数给出迭代更新方程。以下层数标记的详细规定可见<a href="http://ufldl.stanford.edu/wiki/index.php/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" target="_blank" rel="external">这里</a>。</p>
+<ol>
+<li><p>从隐藏层到输出层</p>
+<p>先假设网络结构为只包含一个隐藏层，即从第二层隐藏层到输出层的权重矩阵为$W^{(2)}$。下面讨论先计算权重 $W^{(2)}$对损失函数的导数，将输出层上的节点标为 $k$ ，隐藏层中的节点标为 $j$，则有$\frac{\partial J}{\partial Wkj} =\frac{\partial J}{\partial net_k} \frac{\partial net_k}{\partial Wkj}$,其中前一项 $\frac{\partial J}{\partial net_k} $对于所有 $\frac{\partial J}{\partial Wk(\cdot) }$都相同，记 $\delta = \frac{\partial J}{\partial net_k}$。对于分类问题，规定输出层的$net_k = a_k$，则有$\delta^{(3)}_k =  \frac{\partial J}{\partial a_k} \frac{\partial a_k}{\partial net_k} = (p_k - t_k)  \times 1= p_k- t_k $。故有$\frac{\partial J}{\partial Wkj}  =\frac{\partial J}{\partial net_k} \frac{\partial net_k}{\partial Wkj} = \delta^{(3)}_k z_j = (p_k-t_k) z_j$。将该计算过程向量化则有$\delta^{(3)} =P - T $, 及$\Delta W^{(2)} = \frac{\partial J}{\partial W^{(2)}} = \delta^{(3)} (z^{(2)})^t  $，其中$\Delta W^{(2)}$是一个与$W^{(2)}$有相同形状的矩阵。</p>
+</li>
+<li><p>从输入层到隐藏层，隐藏层到隐藏层</p>
+<p>记从隐含层$n-1$到下一隐含层的权重为$W^{(n-1)}$。对于第$n$层隐含层，记其上层（第$n-1$层）的节点为 $i$，该层（第$n$层）节点为$j$，再下层（第$n+1$层）节点为$k$。则$W^{(n-1)}$是一个$n_j \times n_i$的矩阵。现假设该神经网络从$n$层开始所有 $\delta^{(o)}, \Delta W^{(o)}$都已知，现希望求第$n-1$层的$\Delta W^{(n-1)}$ 。将损失函数对矩阵值求导，则有 $\frac{\partial J}{\partial Wji^{(n-1)}} =\frac{\partial J}{\partial net_j^{(n)}} \frac{\partial net_j^{(n)}}{\partial Wji^{(n-1)}}$，同上，记$\delta_j^{(n)} = \frac{\partial J}{\partial net_j^{(n)}}$，则有<br>$$<br>\delta_j^{(n)} = \frac{\partial J}{\partial net_j^{(n)}} =  \frac{\partial J}{\partial z_j^{(n)}} \frac{\partial z_j^{(n)}}{\partial net_j^{(n)}} =    \sum_k \frac{\partial J}{\partial net_k^{(n+1)}} \frac{\partial net_k^{(n+1)}}{\partial z_j^{(n)}} \frac{\partial z_j^{(n)}}{\partial net_j^{(n)}}  = \sum_k \delta_k^{(n+1)} Wkj^{(n)}f(net_j^{(n)})<br>$$<br>这样损失函数对该层权重的导数即为有$\frac{\partial J}{\partial Wji^{(n-1)}} =\frac{\partial J}{\partial net_j^{(n)}} \frac{\partial net_j^{(n)}}{\partial Wji^{(n-1)}} = \delta_j^{(n)} z_i^{(n-1)}$。将该层计算过程向量化有$\delta^{(n)} = f’(net^{(n)}) \circ (W^{(n)})^t \delta^{(n+1)}$，其中$\circ$运算为<a href="https://www.wikiwand.com/en/Hadamard_product_(matrices" target="_blank" rel="external">Hadamard变换</a>)。这样，$\Delta W^{(n-1)} = \frac {\partial J}{\partial W^{(n-1)}} =  \times \delta^{(n)} (z^{(n-1)})^t$。对于计算从输入层到隐含层的参数导数情况，只需令该式中的$z^{(n-1)} = x$ 即可求出导数。</p>
+</li>
+</ol>
+<p>因此，神经网络的迭代过程可以表示为，先进行正向传播求出每个节点的值，再反向传播求得$\Delta W$进而更新权重。例如，对于前面讨论的三层神经网络，正向传播的计算过程为$net^{(1)} -&gt; z^{(1)} -&gt; net^{(2)} -&gt; z^{(2)}  -&gt; p^{(2)}$，反向传播的计算过程为：$\delta^{3} -&gt; \Delta W^{(2)} -&gt; \delta^{(2)} -&gt; \Delta W^{(1)} $。即有：</p>
+<ul>
+<li>$\delta^{(3)} = P - T $</li>
+<li>$\Delta W^{(2)} = \delta^{(3)} (z^{(2)})^t  $</li>
+<li>$\delta^{(2)} =  f’(net^{(2)}) \circ (W^{(2)})^t \delta^{(3)}$</li>
+<li>$\Delta W^{(1)} = \delta^{(2)} (x)^t  $</li>
+</ul>
+<p>同理可推得$\Delta b^{(n)} =  \delta^{(n+1)}   $。若激活函数为Logistic-Sigmoid记为$f(\cdot)$，由于其导数为$f’(x) = f(x) (1-f(x))$可以表示为函数值的函数，记$df(x) = x(1-x)$，则$  f’(net^{(2)}) =  df(z^{(2)}) = z^{(2)}  \circ (1- z^{(2)}) $  </p>
+<p>有了$\Delta W， \Delta b$，就可以根据迭代规则($W(n+1) = W(n)  -  \eta\Delta W(n)$)对权重进行学习。</p>
+<h2 id="NN学习的优化"><a href="#NN学习的优化" class="headerlink" title="NN学习的优化"></a>NN学习的优化</h2><p>有了以上多层网络的学习算法即可以开始对网络进行学习。在实际应用时，使用以上结构得到的性能和准确率往往是不够的。一方面由于神经网络能进行高维空间映射，其可以将函数的复杂度不断上升使得其对样本集的学习分类效果达到100%，而这样的得到的复杂分界面通过是过拟合的，即该神经网络应用在测试数据集时得到较差的结果。另一方面，由于神经网络在高维空间中进行梯度下降学习，其学习过程会困于局部最小值或遇到马鞍面的情况，对于这些问题，神经网络都不能很好得解决。下面讨论对NN学习中得优化，其中向量化和加动量能提高NN运行速度，Regulation和权重衰减能缓和过拟合的情况。</p>
+<ul>
+<li>向量化：向量化即将函数运行的过程进行向量化运算。上面对NN计算的讨论可以看成是对单个样本$x^{(i)}$运算向量化结果，事实上，对于样本集$X = (x^{(1)}, x^{(2)}, …, x^{(m)})$，其计算过程也可以向量化。首先，对于拥有$d$个特征的单个样本$x^{(1)}$的情况，其前向计算过程为：<br>$$<br>x^{(1)} [d \times 1] -&gt; net^{(2)} [n2 \times 1]-&gt; z^{(2)}  [n2 \times 1]-&gt; net^{(3)}  [n3 \times 1]-&gt; z^{(3)}  [n3 \times 1] -&gt; p^{(3)}  [n_3  \times 1]<br>$$<br>其中$n2$表示第二层的节点数。若将$x^{(1)}$ 替换为$X \ [d \times N]$，其中$N$为样本集容量。这样，根据前向传播的公式，只需将$b^{(1)} [n2 \times N]$，即可将上述所有矩阵的列向量变成对应独立每个样本得到的值，即可以直接得到 $p^{(3)} [n3 \times N]$，对应$N$个样本下每个类别的概率值。进一步得，根据反向传播公式$\Delta W^{(2)} [n3 \times n2]= \delta^{(3)} (z^{(2)})^t  $，由于向量化得到得$ \delta^{(3)} ,z^{(2)}  $的维数分别为$[n3 \times N], [n2 \times N]$，反向传播公式的到$\Delta W^{(2)}$等价为$N$个单样本得到的$\Delta W^{(2)}$的叠加！由于$\partial J(W) / \partial w = \sum_k^N \partial J(W, x_k) / \partial w$，计算样本集对于单个权重$w$的导数时需要计算$N$个单样本对权重$w$求导数再就和，故以上向量化的结果可以把这个值直接得出。同理，根据公式$\Delta b^{(2)} =  \delta^{(3)}  $，若要再向量化中对偏移量也得到类似的结果只需令$\Delta b^{(2)} =  sum(\delta^{(3)}, axis=1)  $，即$\Delta b_i^{(2)} = \sum_k^N (\delta_i^{(3)})^{(k)}$ 。详细的计算过程可以查看下面的代码实现。</li>
+</ul>
+<ul>
+<li>Regulation：正规化即加入对参数数值大小的惩罚项，这样可以防止参数过大。例如，对损失函数添加$W$每个数值平方，这样有 $J(new) = J + \lambda/2 ( \sum w_i^2)$，其中$\lambda$ 是调整系数。这样即可在减少输出层与真实输出间差异的同时确保函数不会太过复杂以至于过拟合（过拟合下权重通常有较大的数值），加了规范化项后对$w_i$求导的数值就要加入一项 $\lambda w_i$ 。</li>
+<li>加动量：加动量即在更新权重值的时候考虑当前推荐的移动方向（及速度）及历史推荐的移动方向（及速度），该描述体现为将更新公式变成$W(n+1) = W(n) + (1-\alpha) \Delta W(n) + \alpha  \Delta W(n-1)$，其中$\alpha$为调节动量大小的参数。加入动量后对于搜索空间中陡峭的区域权重值的变化较快，这样有利于减少函数收敛及在平坦区域上搜索的时间。</li>
+<li>权重衰减：权重衰减和正规化规范化都对权重的数值大小进行调整，权重衰减的规则时在更新后，将权重进一步缩减$W(n+1) = (1-\epsilon ) W(n+1)$，其中$\epsilon$为调节参数。</li>
+</ul>
+<h1 id="Python-实现"><a href="#Python-实现" class="headerlink" title="Python 实现"></a>Python 实现</h1><p>好了，通过上文的讨论，现在终于可以动手写代码实现了。下面实现一个三层神经网络分类器，其输出层使用Softmax函数以获得样本的后验概率估计值。</p>
+<h2 id="测试数据集"><a href="#测试数据集" class="headerlink" title="测试数据集"></a>测试数据集</h2><p>生成200个呈半月形分布数据，并先使用上次编写的<a href="http://joshua.galaxy.42dna.com/Linear-classifier-Perceptron-and-Relaxation-alg.html">感知器</a>分出一个线性分界面。从图中可以看出感知器得到的线性分解面不能很好解决该数据集的分类问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">from sklearn import datasets</div><div class="line"></div><div class="line"># 生成数据</div><div class="line">np.random.seed(0)</div><div class="line">X, y = datasets.make_moons(200, noise=0.25)</div><div class="line"></div><div class="line"># 感知器学习，画图</div><div class="line">%matplotlib inline</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from mlxtend.plotting import plot_decision_regions</div><div class="line"></div><div class="line">ppn = Perceptron(epochs=100, eta=0.01)</div><div class="line"></div><div class="line">newy = np.where(y &gt; 0, 1, -1)</div><div class="line">ppn.increment_train(X, newy)</div><div class="line">#ppn.batch_train(X, y)</div><div class="line">print(&apos;Weights: %s, predict rate:%s&apos; % (ppn.w_, ppn.get_predict_rate(X, newy)))</div><div class="line">plot_decision_regions(X, newy, clf=ppn)</div><div class="line">plt.title(&apos;Perceptron&apos;)</div><div class="line">plt.xlabel(&apos;sepal length [cm]&apos;)</div><div class="line">plt.ylabel(&apos;petal length [cm]&apos;)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="/uploads/Neural-Networks/perceptron.png" alt="perceptron_data"></p>
+<h2 id="ANN实现"><a href="#ANN实现" class="headerlink" title="ANN实现"></a>ANN实现</h2><p>下面用向量化的操作实现多层神经网络。其中，输出层使用softmax函数，损失函数定义为$J(W) = \sum_k^m J(W, x_k) + \lambda/2 \sum w^2 = \sum_k \sum_i -t_i log (p_i)  + \lambda/2 \sum w^2 $。学习算法使用批量下降。其中网络结构及激活函数可以自定义。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Artificial  Neural Network</span></div><div class="line"></div><div class="line"><span class="comment"># classifier = ANN(eta = step_len, epochs = max_iteration, _lambda = lambda_value)</span></div><div class="line"><span class="comment"># classifier.train(X, y)</span></div><div class="line"><span class="comment"># make sure X = [nsample X nfeature], y = [ nsample X nclass ]</span></div><div class="line"><span class="comment"># y only have two class label  &#123;0, 1, 2, etc&#125;, (begin with 0)</span></div><div class="line"><span class="comment"># [= 1] position in each row indicate the y_i label, e.g. y_i \in &#123;1&#125;, then y_i = [0, 1, 0, etc.] </span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ANN</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.01</span>, epochs=<span class="number">100</span>, _lambda = <span class="number">0</span>, \</span></span></div><div class="line"><span class="function"><span class="params">                 momentum_alpha = <span class="number">0.0</span>, decay_r = <span class="number">0.0</span>)</span>:</span></div><div class="line">        self.eta = eta   <span class="comment"># eta should &gt; 0</span></div><div class="line">        self.epochs = epochs</div><div class="line">        self._lambda = _lambda</div><div class="line">        self.momentum_alpha = momentum_alpha</div><div class="line">        self.decay_r = decay_r</div><div class="line"></div><div class="line">    <span class="comment"># can custom to have different activation function for each layer, here assign each layer with </span></div><div class="line">    <span class="comment"># identical activation function for simplifying the code structure</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_activation_function</span><span class="params">(self, f, df)</span>:</span></div><div class="line">        self.f = f</div><div class="line">        self.df = df</div><div class="line">        </div><div class="line">        </div><div class="line">    <span class="comment"># network struct, input_n[int], output_n[int], hide_n[n1[int], n2[int], etc.]</span></div><div class="line">    <span class="comment"># the network will have a first layer that have input_n nodes</span></div><div class="line">    <span class="comment"># last layer have output_n nodes</span></div><div class="line">    <span class="comment"># several hide layer: each have n1 nodes, n2 nodes , etc.</span></div><div class="line">    <span class="comment"># e.g init_network_structure(3, 2, [5, 5])</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_network_structure</span><span class="params">(self, input_n, output_n, hide_n=[<span class="number">3</span>], nsample = <span class="number">1</span>)</span>:</span></div><div class="line">        np.random.seed(<span class="number">0</span>)</div><div class="line">        all_n = [input_n] + hide_n + [output_n]</div><div class="line">        self.all_n = all_n</div><div class="line">        self.ln = len(all_n)     </div><div class="line">        </div><div class="line">        <span class="comment"># init weight and bias, which will use both in train and predict process</span></div><div class="line"><span class="comment">#         k = 1.0 / nsample      </span></div><div class="line">        k = <span class="number">0.01</span></div><div class="line">        <span class="comment"># weight, init with normal(0, (0.01)^2)</span></div><div class="line">        self.w =  [np.random.randn(all_n[i+<span class="number">1</span>], all_n[i]) * k <span class="keyword">for</span> i <span class="keyword">in</span> range(len(all_n)<span class="number">-1</span>)]</div><div class="line">        <span class="comment"># bias, init with normal(0, (0.01)^2)</span></div><div class="line">        self.b = [np.random.randn(all_n[i+<span class="number">1</span>], <span class="number">1</span>) * k <span class="keyword">for</span> i <span class="keyword">in</span> range(len(all_n)<span class="number">-1</span>)]</div><div class="line">        </div><div class="line">        <span class="comment"># init net, d_weight, d_bias, p, etc, which will only use in train process   </span></div><div class="line">        <span class="comment"># forward  para.</span></div><div class="line">        self.net = [np.zeros((i, nsample)) <span class="keyword">for</span> i <span class="keyword">in</span> all_n]</div><div class="line">        self.z = [np.zeros((i, nsample)) <span class="keyword">for</span> i <span class="keyword">in</span> all_n]</div><div class="line">        <span class="comment"># for the predict layer p</span></div><div class="line">        self.p = np.zeros((output_n, nsample))</div><div class="line">        </div><div class="line">        <span class="comment"># backpropagation  para.</span></div><div class="line">        <span class="comment"># d_weight &amp; d_bias</span></div><div class="line">        self.delta = [np.zeros((i, nsample)) <span class="keyword">for</span> i <span class="keyword">in</span> all_n]</div><div class="line">        self.dw =  [np.zeros((all_n[i+<span class="number">1</span>], all_n[i])) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(all_n)<span class="number">-1</span>)]</div><div class="line">        self.db = [np.zeros((all_n[i+<span class="number">1</span>], <span class="number">1</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(all_n)<span class="number">-1</span>)]</div><div class="line">        </div><div class="line">        self.dw_pre =  [np.zeros((all_n[i+<span class="number">1</span>], all_n[i])) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(all_n)<span class="number">-1</span>)]</div><div class="line">        self.db_pre = [np.zeros((all_n[i+<span class="number">1</span>], <span class="number">1</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(all_n)<span class="number">-1</span>)]</div><div class="line">                </div><div class="line">    </div><div class="line">    <span class="comment"># i = layer_i</span></div><div class="line">    <span class="comment"># from second layer to last layer</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward_propagation</span><span class="params">(self, i)</span>:</span></div><div class="line">        <span class="comment"># net[n_l X nsample] = [n_l X nsample]  + [n_l X 1]</span></div><div class="line">        <span class="comment"># the self.b will change from to [n_l X 1] to [n_l X nsample] automatically</span></div><div class="line">        self.net[i] = self.w[i<span class="number">-1</span>].dot(self.z[i<span class="number">-1</span>]) + self.b[i<span class="number">-1</span>]</div><div class="line">        self.z[i] = self.f(self.net[i]) <span class="keyword">if</span> i != self.ln - <span class="number">1</span> <span class="keyword">else</span> self.net[i]</div><div class="line">        <span class="comment"># if is the last output layer</span></div><div class="line">        <span class="comment"># update output</span></div><div class="line">        <span class="keyword">if</span> i == self.ln - <span class="number">1</span>:</div><div class="line">            self.p = np.exp(self.z[i])</div><div class="line">            sum_p = self.p.sum(<span class="number">0</span>)</div><div class="line">            <span class="comment"># exp(p) so sum_p &gt; 0</span></div><div class="line">            self.p = self.p / sum_p</div><div class="line">            </div><div class="line">    </div><div class="line">    <span class="comment"># i = layer_i</span></div><div class="line">    <span class="comment"># from last layer to first layer</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backpropagation</span><span class="params">(self, i, T=<span class="number">0</span>)</span>:</span></div><div class="line">        <span class="comment"># if is the last layer</span></div><div class="line">        <span class="keyword">if</span> i == self.ln - <span class="number">1</span>:</div><div class="line">            self.delta[i] = self.p - T</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="comment"># self.df(self.z[i]) == (self.f(self.net[i]))'</span></div><div class="line">            self.delta[i] = self.df(self.z[i]) * \</div><div class="line">            (self.w[i].T).dot(self.delta[i+<span class="number">1</span>])</div><div class="line">        <span class="comment"># dw is the sum of all sample dw_i</span></div><div class="line"><span class="comment">#         print self.dw[i].shape, self.delta[i+1].shape, self.z[i].T.shape</span></div><div class="line">        self.dw[i<span class="number">-1</span>] = self.delta[i].dot(self.z[i<span class="number">-1</span>].T)</div><div class="line">        <span class="comment"># db is the sum of all sample db_i</span></div><div class="line">        self.db[i<span class="number">-1</span>] = np.sum(self.delta[i], axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">    </div><div class="line">    <span class="comment"># get probability</span></div><div class="line">    <span class="comment"># X = [n_new_sample X nfeature]</span></div><div class="line">    <span class="comment"># return p = [nclass X n_new_sample]</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_p</span><span class="params">(self, X)</span>:</span></div><div class="line">        tmp_z = X.T</div><div class="line">        <span class="comment"># from second layer to last layer</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, self.ln):</div><div class="line">            tmp_net = self.w[i<span class="number">-1</span>].dot(tmp_z) + self.b[i<span class="number">-1</span>]</div><div class="line">            tmp_z = self.f(tmp_net) <span class="keyword">if</span> i != self.ln - <span class="number">1</span> <span class="keyword">else</span> tmp_net</div><div class="line">        tmp_p = np.exp(tmp_z)</div><div class="line">        sum_p = tmp_p.sum(<span class="number">0</span>)</div><div class="line">        p = tmp_p / sum_p</div><div class="line">        <span class="keyword">return</span> p</div><div class="line">       </div><div class="line">    <span class="comment"># transform probability to class label</span></div><div class="line">    <span class="comment"># return predict =  [n_new_sample, ] array</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></div><div class="line">        p = self.get_p(X)</div><div class="line">        <span class="comment">## transform p to class label</span></div><div class="line">        <span class="keyword">return</span> np.argmax(p, axis=<span class="number">0</span>)</div><div class="line">    </div><div class="line">    <span class="comment"># calculate sample set loss</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calculate_loss</span><span class="params">(self, X, y)</span>:</span></div><div class="line">        p = self.get_p(X)</div><div class="line">        <span class="comment"># Calculating the loss</span></div><div class="line">        nsample = X.shape[<span class="number">0</span>]</div><div class="line">        <span class="comment"># sum(J(i)) / m</span></div><div class="line">        loss = <span class="number">-1</span> * np.sum(np.log(p) * y.T) / nsample</div><div class="line">        <span class="comment"># regularization term</span></div><div class="line">        loss += self._lambda / <span class="number">2.0</span> * sum([np.sum(np.square(_w)) <span class="keyword">for</span> _w <span class="keyword">in</span> self.w])</div><div class="line">        <span class="keyword">return</span> loss</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calculate_match_rate</span><span class="params">(self, X, y)</span>:</span></div><div class="line">        pre_label = self.predict(X)</div><div class="line">        <span class="comment"># Calculating the loss</span></div><div class="line">        match_time = sum([y[i][pre_label[i]] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(y))])</div><div class="line">        <span class="keyword">return</span> <span class="number">1.0</span> * match_time / y.shape[<span class="number">0</span>]</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">log_shape</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'layer nodes: '</span>, self.all_n</div><div class="line">        <span class="keyword">print</span> <span class="string">'p :'</span>, self.p.shape, self.p</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(self.ln):</div><div class="line">            <span class="keyword">print</span> <span class="string">'layer %d: '</span> % (i)</div><div class="line">            <span class="keyword">print</span> <span class="string">'net :'</span>, self.net[i].shape, self.net[i]</div><div class="line">            <span class="keyword">print</span> <span class="string">'z :'</span>, self.z[i].shape, self.z[i]</div><div class="line">            <span class="keyword">print</span> <span class="string">'delta :'</span>, self.delta[i].shape, self.delta[i]</div><div class="line">            <span class="keyword">if</span> i != self.ln - <span class="number">1</span>:</div><div class="line">                <span class="keyword">print</span> <span class="string">'w :'</span>, self.w[i].shape, self.w[i]</div><div class="line">                <span class="keyword">print</span> <span class="string">'b :'</span>, self.b[i].shape, self.b[i]</div><div class="line">                <span class="keyword">print</span> <span class="string">'dw :'</span>, self.dw[i].shape, self.dw[i]</div><div class="line">                <span class="keyword">print</span> <span class="string">'db :'</span>, self.db[i].shape, self.db[i]</div><div class="line">            <span class="keyword">print</span> <span class="string">' '</span></div><div class="line">    </div><div class="line">    <span class="comment"># btach train</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, X, y, hide_n = [<span class="number">3</span>],  f=None, df=None, \</span></span></div><div class="line"><span class="function"><span class="params">                    _lambda = None,  eta=None, epochs=None, \</span></span></div><div class="line"><span class="function"><span class="params">                    momentum_alpha = <span class="number">0.0</span>, decay_r = <span class="number">0.0</span>, print_loss=<span class="number">0</span>)</span>:</span></div><div class="line">        <span class="comment"># init struct first</span></div><div class="line">        nsample, nfeature = X.shape</div><div class="line">        nsample, nclass = y.shape</div><div class="line">        self.init_network_structure(nfeature, nclass, hide_n, nsample)</div><div class="line">        </div><div class="line">        <span class="comment"># init activation_function</span></div><div class="line">        self.init_activation_function(f, df)</div><div class="line"></div><div class="line">        self.eta = self.eta <span class="keyword">if</span> eta <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">else</span> eta</div><div class="line">        self.epochs = self.epochs <span class="keyword">if</span> epochs <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">else</span> epochs</div><div class="line">        self._lambda = self._lambda <span class="keyword">if</span> _lambda <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">else</span> _lambda</div><div class="line">        self.momentum_alpha = momentum_alpha</div><div class="line">        self.decay_r = decay_r</div><div class="line">        </div><div class="line">        <span class="comment"># init input layer, and target nodes</span></div><div class="line">        self.z[<span class="number">0</span>] = X.T</div><div class="line">        target = y.T</div><div class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(self.epochs): </div><div class="line">            <span class="comment"># Forward propagation, for second to last layer</span></div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, self.ln):</div><div class="line">                self.forward_propagation(i)</div><div class="line">            </div><div class="line">            <span class="comment"># Backpropagation, for last-1 to first layer</span></div><div class="line">            <span class="comment"># update output layer</span></div><div class="line">            self.backpropagation(self.ln<span class="number">-1</span>, target)</div><div class="line">            <span class="comment"># for self.ln-2 to 0</span></div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(self.ln<span class="number">-2</span>, <span class="number">0</span>, <span class="number">-1</span>):</div><div class="line">                self.backpropagation(i)</div><div class="line">            </div><div class="line">            <span class="comment"># after backpropagation, weight of loss of all sample's is store in dw</span></div><div class="line">            <span class="comment"># update W and b</span></div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, self.ln<span class="number">-1</span>):</div><div class="line">                update_w = self.eta * (self.dw[i]  + self._lambda * self.w[i])</div><div class="line">                update_d = self.eta * self.db[i] </div><div class="line"><span class="comment">#                 self.w[i] -=  update_w</span></div><div class="line"><span class="comment">#                 self.b[i] -=  update_d</span></div><div class="line">                <span class="keyword">if</span> momentum_alpha &gt; <span class="number">0</span> <span class="keyword">and</span> _ &gt; <span class="number">0</span>:</div><div class="line">                    self.w[i] -= update_w * (<span class="number">1</span> - momentum_alpha ) + momentum_alpha * self.dw_pre[i]</div><div class="line">                    self.b[i] -= update_d * (<span class="number">1</span> - momentum_alpha ) + momentum_alpha * self.db_pre[i]</div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    self.w[i] -=  update_w</div><div class="line">                    self.b[i] -=  update_d</div><div class="line">                    </div><div class="line">                self.w[i] =  self.w[i] * (<span class="number">1.0</span> - self.decay_r)</div><div class="line">                <span class="comment">#self.b[i] =  self.b[i] * (1.0 - self.decay_r)</span></div><div class="line">                </div><div class="line">                <span class="keyword">if</span> momentum_alpha &gt; <span class="number">0.0</span>:</div><div class="line">                    self.dw_pre[i] = update_w</div><div class="line">                    self.db_pre[i] = update_d</div><div class="line"></div><div class="line">            <span class="comment"># self.log_shape()</span></div><div class="line">            <span class="keyword">if</span> print_loss <span class="keyword">and</span> _ % print_loss == <span class="number">0</span>:</div><div class="line">                <span class="keyword">print</span> <span class="string">"Loss after iteration %i: %f; match times:%f"</span> %(_, \</div><div class="line">                        self.calculate_loss(X, y), self.calculate_match_rate(X, y))</div></pre></td></tr></table></figure>
+<h2 id="测试结果与参数讨论"><a href="#测试结果与参数讨论" class="headerlink" title="测试结果与参数讨论"></a>测试结果与参数讨论</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"># Logistic-Sigmoid</div><div class="line"># f = lambda x: 1.0 / (1 + np.exp(-x)) #apply to net</div><div class="line"># df = lambda x: x * (1 - x)           #apply to z</div><div class="line"></div><div class="line"># # Tanh-Sigmoid</div><div class="line">f = lambda x: np.tanh(x)</div><div class="line">df = lambda x: 1 - x*x</div><div class="line"></div><div class="line"># init input data for NN</div><div class="line"># 200 X 2</div><div class="line">nsample, nfeature = X.shape</div><div class="line">nclass = 2</div><div class="line"></div><div class="line">tX = X</div><div class="line">ty = np.zeros((nsample, nclass))</div><div class="line">for i in range(len(ty)):</div><div class="line">    ty[i][int(y[i])] = 1</div><div class="line">ty = ty</div><div class="line">print tX.shape, ty.shape</div><div class="line"></div><div class="line">nn = ANN()</div><div class="line"></div><div class="line">nn_hdim = [3]</div><div class="line">nn.train(tX, ty, hide_n = nn_hdim,  f=f, df=df, \</div><div class="line">         eta = 0.001, epochs=20000, _lambda = 0.001, \</div><div class="line">         momentum_alpha = 0, decay_r = 0, print_loss=1000)</div><div class="line">    </div><div class="line">plt.title(&apos;Hidden Layer %s, match time: %.1f%%&apos; % (nn_hdim, \</div><div class="line">          100 * nn.calculate_match_rate(tX, ty)))</div><div class="line">plot_decision_regions(X, y, clf=nn)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p>在不同激活函数、网络结构、参数下进行测试。首先是激活函数，在该问题上tanh函数与logistic函数得到相似的结果。</p>
+<p><img src="/uploads/Neural-Networks/nn_predict_act.png" alt="nn_predict"></p>
+<p>下面设置$\eta = 0.01, \lambda = 0.001$，迭代次数为30000次在不同的隐藏层节点数下进行测试。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">plt.figure(figsize=(<span class="number">16</span>, <span class="number">32</span>))</div><div class="line"></div><div class="line">var_layer = [[<span class="number">1</span>], [<span class="number">3</span>], [<span class="number">2</span>], [<span class="number">5</span>], [<span class="number">10</span>], [<span class="number">50</span>]]</div><div class="line">var_eta = [<span class="number">0.001</span>] * <span class="number">6</span></div><div class="line">var_epochs = [<span class="number">30000</span>] * <span class="number">6</span></div><div class="line">var_f = [f] * <span class="number">6</span></div><div class="line">var_df = [df] * <span class="number">6</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i, nn_hdim <span class="keyword">in</span> enumerate(var_layer):</div><div class="line">    nn.train(tX, ty, hide_n = var_layer[i],  f=f, df=df, \</div><div class="line">         eta = var_eta[i], epochs=var_epochs[i], _lambda = <span class="number">0.001</span>, \</div><div class="line">         momentum_alpha = <span class="number">0</span>, decay_r = <span class="number">0</span>, print_loss=<span class="number">10000</span>)</div><div class="line">    plt.subplot(<span class="number">5</span>, <span class="number">2</span>, i+<span class="number">1</span>)</div><div class="line">    <span class="keyword">if</span> i == <span class="number">0</span>:</div><div class="line">        plt.title(<span class="string">'hide layer %s, match time: %.1f%%'</span> % (var_layer[i],\</div><div class="line">              <span class="number">100</span> * nn.calculate_match_rate(tX, ty)))</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        plt.title(<span class="string">'hide layer %s, match time: %.1f%%'</span> % (var_layer[i],\</div><div class="line">              <span class="number">100</span> * nn.calculate_match_rate(tX, ty)))</div><div class="line">    plot_decision_regions(X, y, clf=nn)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="/uploads/Neural-Networks/nn_predict.png" alt="nn_predict"></p>
+<p>可以看出在隐藏层只有一层的情况下，增加隐藏层的节点数量能提高分类性能，但节点增加到一定数量后如果不能增加迭代次数和调整相应的$\eta,\lambda$性能会饱和。下图为隐藏层节点都为50，在不同迭代次数和步长下学习的结果。可见隐藏节点较多的时候网络倾向于过拟合。</p>
+<p><img src="/uploads/Neural-Networks/nn_predict_epochs.png" alt="nn_predict"></p>
+<p>下面是设置不同的隐藏层结构下的结果。图上参数表示 [n1, n2] 表示有两个隐藏层，第一层有n1个节点，第二层有n2个节点。增加隐藏层的层数能提高分类性能，但是会增加函数的复杂度，使得结果倾向于过拟合。</p>
+<p><img src="/uploads/Neural-Networks/nn_predict_layer.png" alt="nn_predict"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>待续</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>wiki: <a href="https://www.wikiwand.com/zh/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" target="_blank" rel="external">https://www.wikiwand.com/zh/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/模式识别/" rel="tag"># 模式识别</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/神经网络/" rel="tag"># 神经网络</a>
+          
+            <a href="/tags/函数求导/" rel="tag"># 函数求导</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Linear-classifier-Perceptron-and-Relaxation-alg.html" rel="next" title="线性判别函数，感知器和松弛算法">
+                <i class="fa fa-chevron-left"></i> 线性判别函数，感知器和松弛算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTI2My83ODEy"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/favicons/logo.png"
+               alt="SuJunhao" />
+          <p class="site-author-name" itemprop="name">SuJunhao</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sujunhao" target="_blank" title="GitHub"  rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/Joshua_74" target="_blank" title="Zhihu"  rel="external nofollow">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-nd.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络的结构与学习"><span class="nav-number">1.</span> <span class="nav-text">神经网络的结构与学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#神经元与网络结构"><span class="nav-number">1.1.</span> <span class="nav-text">神经元与网络结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络输出"><span class="nav-number">1.1.1.</span> <span class="nav-text">神经网络输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NN学习"><span class="nav-number">1.2.</span> <span class="nav-text">NN学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义损失函数与更新规则"><span class="nav-number">1.2.1.</span> <span class="nav-text">定义损失函数与更新规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向传播算法"><span class="nav-number">1.2.2.</span> <span class="nav-text">反向传播算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数学习"><span class="nav-number">1.2.3.</span> <span class="nav-text">参数学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NN学习的优化"><span class="nav-number">1.3.</span> <span class="nav-text">NN学习的优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-实现"><span class="nav-number">2.</span> <span class="nav-text">Python 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试数据集"><span class="nav-number">2.1.</span> <span class="nav-text">测试数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ANN实现"><span class="nav-number">2.2.</span> <span class="nav-text">ANN实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试结果与参数讨论"><span class="nav-number">2.3.</span> <span class="nav-text">测试结果与参数讨论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SuJunhao</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>

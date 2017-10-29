@@ -4,8 +4,31 @@
 
     
   <url>
+    <loc>http://joshua.galaxy.42dna.com/Neural-Networks.html</loc>
+    <lastmod>2017-10-29T06:38:07.285Z</lastmod>
+    <data>
+        <display>
+        <title>神经网络结构、学习与实现</title>
+        <pubTime>2017-10-25T11:36:08.000Z</pubTime>
+        
+        <tag>模式识别</tag>
+         
+        <tag>Python</tag>
+         
+        <tag>神经网络</tag>
+         
+        <tag>函数求导</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://joshua.galaxy.42dna.com/Linear-classifier-Perceptron-and-Relaxation-alg.html</loc>
-    <lastmod>2017-10-24T08:08:05.561Z</lastmod>
+    <lastmod>2017-10-25T11:34:24.335Z</lastmod>
     <data>
         <display>
         <title>线性判别函数，感知器和松弛算法</title>
