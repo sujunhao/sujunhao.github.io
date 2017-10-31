@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://joshua.galaxy.42dna.com/a-study-in-free-lunch.html</loc>
-    <lastmod>2017-10-31T07:01:59.503Z</lastmod>
+    <lastmod>2017-10-31T07:21:26.870Z</lastmod>
     <data>
         <display>
         <title>神经网络-一个案例的研究</title>
@@ -13,11 +13,11 @@
         
         <tag>模式识别</tag>
          
-        <tag>Python</tag>
-         
         <tag>神经网络</tag>
          
         <tag>多元正态分布</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -36,9 +36,9 @@
         
         <tag>模式识别</tag>
          
-        <tag>Python</tag>
-         
         <tag>神经网络</tag>
+         
+        <tag>Python</tag>
          
          
            
@@ -76,9 +76,9 @@
         <title>Parzen窗估计和K最近邻估计</title>
         <pubTime>2017-10-06T07:45:59.000Z</pubTime>
         
-        <tag>模式识别</tag>
-         
         <tag>Octave</tag>
+         
+        <tag>模式识别</tag>
          
          
            
