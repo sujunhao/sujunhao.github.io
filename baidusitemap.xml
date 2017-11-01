@@ -4,8 +4,27 @@
 
     
   <url>
+    <loc>http://joshua.galaxy.42dna.com/Parzen%E7%AA%97%E4%BC%B0%E8%AE%A1%E5%92%8CK%E6%9C%80%E8%BF%91%E9%82%BB%E4%BC%B0%E8%AE%A1.html</loc>
+    <lastmod>2017-11-01T00:45:13.610Z</lastmod>
+    <data>
+        <display>
+        <title>Parzen窗估计和K最近邻估计</title>
+        <pubTime>2017-10-06T07:45:59.000Z</pubTime>
+        
+        <tag>模式识别</tag>
+         
+        <tag>Octave</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://joshua.galaxy.42dna.com/a-study-in-free-lunch.html</loc>
-    <lastmod>2017-10-31T15:15:41.832Z</lastmod>
+    <lastmod>2017-11-01T00:40:24.331Z</lastmod>
     <data>
         <display>
         <title>神经网络-一个案例的研究</title>
@@ -15,9 +34,9 @@
          
         <tag>神经网络</tag>
          
-        <tag>多元正态分布</tag>
-         
         <tag>Python</tag>
+         
+        <tag>多元正态分布</tag>
          
          
            
@@ -60,25 +79,6 @@
         <tag>Python</tag>
          
         <tag>感知器</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://joshua.galaxy.42dna.com/Parzen%E7%AA%97%E4%BC%B0%E8%AE%A1%E5%92%8CK%E6%9C%80%E8%BF%91%E9%82%BB%E4%BC%B0%E8%AE%A1.html</loc>
-    <lastmod>2017-10-17T10:21:30.335Z</lastmod>
-    <data>
-        <display>
-        <title>Parzen窗估计和K最近邻估计</title>
-        <pubTime>2017-10-06T07:45:59.000Z</pubTime>
-        
-        <tag>Octave</tag>
-         
-        <tag>模式识别</tag>
          
          
            

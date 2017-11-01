@@ -102,10 +102,9 @@
 <meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/Parzen_高斯.png">
 <meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/Parzen_n.png">
 <meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/Parzen_分类界面.png">
-<meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/Parzen_hn.png">
 <meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/Euclidean_Voronoi_diagram.svg.png">
 <meta property="og:image" content="http://joshua.galaxy.42dna.com/uploads/data/KNN_pdf.png">
-<meta property="og:updated_time" content="2017-10-17T10:21:30.335Z">
+<meta property="og:updated_time" content="2017-11-01T00:45:13.610Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Parzen窗估计和K最近邻估计">
 <meta name="twitter:description" content="非参数概率密度估计概率密度估计即从样本中估计总体的概率密度分布。进行概率密度估计的方法有参数估计与非参数估计。参数估计即在已知总体的分布函数形式的情况下对分布函数参数进行估计。如假如已知一总体呈正态分布，在取得样本的情况下，对总体的概率密度分布的估计就变成对总体的$\mu$ 和 $\sigma^2$ 进行估计。而在未知总体的分布函数形式的情况下，我们可以通过非参数概率密度估计方法对概率密度进行估计">
@@ -440,10 +439,6 @@
 </tbody>
 </table>
 <p>从结果来看使用立方体窗口的预测效果与高斯窗口的情况差别并不大。两种窗口对样本的分类效果都较好$\geq 95\%$，这点单从分类界面是看不出来的。</p>
-<p>下面以$h_n = h_1 / \sqrt n $对窗口宽度进行迭代缩小。对测试样本进行分类测试，可以得到已下识别率曲线。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">#窗口函数使用高斯窗，样本量为1000，对h_n进行迭代缩放,从5~0.5</div><div class="line">f = @w_normal;</div><div class="line">h1 = 5;</div><div class="line">n = 100; </div><div class="line">h_n = arrayfun(@(x)h1/sqrt(x),1:n);</div><div class="line">pre_r = zeros(n, 1);</div><div class="line">for i=1:n</div><div class="line">    pre_Y = predict_parzen(X1, X2, Y, h_n(i), f);</div><div class="line">    pre_r(i) = pre_rate(class_Y, pre_Y);</div><div class="line">end</div><div class="line">#pre_r</div><div class="line">plot(1:n, pre_r);</div></pre></td></tr></table></figure>
-<p><img src="/uploads/data/Parzen_hn.png" alt="Parzen_分类界面"></p>
-<p>从得到的曲线看出分类的识别率都很高，因为原来两个类别的原始分布分得太开了。随着h_n窗口宽度值的缩小，识别率有提高的趋势，进一步还可以看出窗口值太小时识别率会下降。当然，这是在小样本（训练样本1000，测试样本400）下固定分布取得的效果，实际使用Parzen窗进行估计时识别率依赖于原始数据分布的情况。h_n不断缩小能有效逼近样本的真实分布，但太小的时候得到的概率值会受单个样本的影响，而单个样本通常是有误差和噪声的，故而，h_n怎么迭代缩放，迭代到什么时候停止，这些都是要根据样本的实际情况进行考虑的。</p>
 <h2 id="K最近邻估计"><a href="#K最近邻估计" class="headerlink" title="K最近邻估计"></a>K最近邻估计</h2><p>Parzen窗口法和K最近邻（The k-nearest neighbor,，KNN）的目的都是计算$p_n = \frac{k}{ｎ}/V_n$，不同的是Parzen窗口选择在迭代的过程不断固定$V_n$来计算$p_n$，而K最近邻估计选择不断固定一个$k$值来计算$p_n$。K最近邻的计算过程简单来说是对于固定的$k$值，在待测空间点附近找到一个区域$V_n$使得落入该区域的样本点刚好有$k$个再计算出$P(x)$值。</p>
 <p>在使用概率密度来进行分类时，对于一个固定的$k$，找到一个$V_n$（将所有类别的样本合为总体）之后下一步的计算时找到最大的$P(w_i|x) \propto P(w_i) \times P(x|w_i)$，对于恒定$P(w_i)$ 的情况，即找到最大的$P(x|w_i) =  \frac{k_i}{ｎ}/V_n$，又由于此时$n, V_n$（总样本量，固定k值下找到的空间）对于所有$i$（每个类别）都是固定的，因此只需找到类别$i$使得其落入在空间$V_n$次数最多。于是，K最近邻的分类就变成在待测空间找到相邻的$k$个样本点，这些样本点中类别出现次数最多的类别$i$就会有最大的$P(w_i|x)$。</p>
 <p>由于K最近邻计算中有一个找$V_n$的过程，即找在待测空间点附近每个维度距离小于$h_n/2$的区域，在这个过程中距离的度量除了使用欧几里得距离外还可以使用其他距离度量，如曼哈顿距离等。</p>
@@ -507,9 +502,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Octave/" rel="tag"># Octave</a>
-          
             <a href="/tags/模式识别/" rel="tag"># 模式识别</a>
+          
+            <a href="/tags/Octave/" rel="tag"># Octave</a>
           
         </div>
       
