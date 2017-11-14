@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>http://joshua.galaxy.42dna.com/the-error-rate.html</loc>
+    <lastmod>2017-11-14T04:36:45.151Z</lastmod>
+    <data>
+        <display>
+        <title>分类模型理论准确率计算</title>
+        <pubTime>2017-11-13T23:47:06.000Z</pubTime>
+        
+        <tag>模式识别</tag>
+         
+        <tag>Python</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://joshua.galaxy.42dna.com/%E4%B8%89%E4%BD%93%E6%95%85%E4%BA%8B.html</loc>
     <lastmod>2017-11-14T04:28:55.668Z</lastmod>
     <data>
@@ -22,25 +41,6 @@
     </url>
 
     
-    
-  <url>
-    <loc>http://joshua.galaxy.42dna.com/the-error-rate.html</loc>
-    <lastmod>2017-11-14T01:54:42.381Z</lastmod>
-    <data>
-        <display>
-        <title>分类模型理论准确率计算</title>
-        <pubTime>2017-11-14T09:47:06.000Z</pubTime>
-        
-        <tag>模式识别</tag>
-         
-        <tag>Python</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://joshua.galaxy.42dna.com/a-study-in-free-lunch.html</loc>
